@@ -4,7 +4,13 @@ const { promisify } = require('util');
 
 const { database } = require('./keys');
 
-const pool = new Pool (database);
+const pool = new Pool({
+    user: database.user,
+    host: database.host,
+    database: database.database,
+    password: database.password,
+    port: database.port,
+});
 
 pool.getConnection((err, connection) => {
     if (err) {
