@@ -1,0 +1,40 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/salas/compartir/{{idSala}}" method="POST">
+                <div class="form-group">
+                    <label for="select-users">Seleccione un usuario:</label>
+                    <select name="idUsuario" id="select-users" class="form-control" onchange="habilitar()">
+                        <option value="nulo">Seleccione un usuario</option>
+                        {{#each users}}
+                        <option value="{{id}}">{{username}}, {{correo}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <button class="btn btn-success btn-block">Compartir</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        {{#each users}}
+        <div class="col-md-6 my-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="" target="_blank">
+                        <h5 class="card-title">{{username}}</h5>
+                    </a>
+                    <p class="card-text">{{correo}}</p>
+                    <input type="hidden" class="form-control" name="id" value="{{id}}">
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-12">
+            <div class="card card-body text-center">
+                <p>No hay ningún usuario disponible.</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

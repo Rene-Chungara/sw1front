@@ -1,0 +1,40 @@
+<div class="container p-2">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2>Mis Salas</h2>
+        </div>
+    </div>
+    <!-- Botones en la parte superior -->
+    <div class="row mb-4">
+        <div class="col text-center">
+            <a href="/salas/add" class="btn btn-primary mr-2">Crear Sala</a>
+            <a href="/salas/salasCompartidas" class="btn btn-success">Salas Compartidas</a>
+        </div>
+    </div>
+
+    <div class="row">
+        {{#each salas}}
+        <div class="col-md-4">
+            <div class="card text-center mb-4">
+                <div class="card-body">
+                    <a href="/salas/inSala/{{tokenS}}" target="_blank">
+                        <h3 class="card-title text-uppercase">{{title}}</h3>
+                    </a>
+                    <p class="m-3">{{description}}</p>
+                    <p class="text-muted">{{timeago created_at}}</p>
+                    <a class="btn btn-primary" href="/salas/listUsuarios/{{id}}">Compartir</a>
+                    <a class="btn btn-success" href="/salas/edit/{{id}}">Editar</a> <!-- Botón de editar verde -->
+                    <a class="btn btn-danger" href="/salas/delete/{{id}}">Eliminar Sala</a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>No hay ninguna sala para este usuario.</p>
+                <a href="/salas/add">Crea Una Sala</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
