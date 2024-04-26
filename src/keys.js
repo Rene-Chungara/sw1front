@@ -1,13 +1,7 @@
-//dir de la db
+// keys.js
+
 module.exports = {
-
     database: {
-        connectionLimit: 1000,
-        host: '127.0.0.1',
-        port: '5432',
-        user: 'root',
-        password: '1234',
-        database: 'sw1pizarra'
-
+        connectionString: 'postgresql://root:1234@127.0.0.1:5432/sw1pizarra' 
     }
 }

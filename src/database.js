@@ -1,7 +1,9 @@
 const { Pool } = require('pg');
 const { database } = require('./keys');
 
-const pool = new Pool(database);
+const pool = new Pool({
+    connectionString: database.connectionString
+});
 
 pool.on('connect', () => {
     console.log('Connected to PostgreSQL database');
