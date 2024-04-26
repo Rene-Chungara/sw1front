@@ -14,7 +14,7 @@ passport.use('local.signin', new LocalStrategy({
   console.log(req.body);
   console.log(correo);
   console.log(password);
-  const rows = await pool.query('SELECT * FROM users WHERE correo = ?', [correo]);
+  const rows = await pool.query('SELECT * FROM users WHERE correo = $1', [correo]);
   if (rows.length > 0) {
     const user = rows[0];
     const validPassword = await helpers.matchPassword(password, user.password)
@@ -47,17 +47,22 @@ passport.use('local.signup', new LocalStrategy({
   console.log(newUser);
   newUser.password = await helpers.encryptPassword(password);
   //   // Saving in the Database
-  const result = await pool.query('INSERT INTO users SET ? ', [newUser]);
-  newUser.id = result.insertId;
+  const result = await pool.query('INSERT INTO users (username, correo, password, tokenU) VALUES ($1, $2, $3, $4)', [newUser.username, newUser.correo, newUser.password, newUser.tokenU]);
+  newUser.id = result.rows[0].id;
   return done(null, newUser);
 }));
 
 passport.serializeUser((user, done) => {
+  console.log(user)
   done(null, user.id);
 });
 
 //guarda los usuarios dentro de la sesion  
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
-  done(null, rows[0]);
+  try {
+    const rows = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    done(null, rows[0]);
+  } catch (error) {
+    done(error);
+  }
 });

@@ -10,6 +10,7 @@ const pgSession = require('connect-pg-simple')(session);
 const app = express();
 require('./lib/passport');
 
+const pool = require('./database'); // Importa el pool de conexión PostgreSQL
 const { database } = require('./keys');
 
 // Settings
@@ -31,7 +32,7 @@ app.use(express.json());
 
 app.use(session({
   store: new pgSession({
-    pool: database, // Aquí pasas directamente la configuración del pool de PostgreSQL
+    pool: pool, // Utiliza el pool de conexión PostgreSQL
     tableName: 'session' // Nombre de la tabla donde se almacenarán las sesiones
   }),
   secret: 'msm',
